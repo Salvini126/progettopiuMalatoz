@@ -14,11 +14,13 @@ def get_data():
     return jsonify(rows)
 
 @app.route('/Verifiche')
-def get_data():
+def get_data2():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM VERIFICA")
     rows = cursor.fetchall()
     return jsonify(rows)
+
+
 
 
 
