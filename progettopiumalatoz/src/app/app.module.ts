@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CompVerComponent } from './comp-ver/comp-ver.component';
+import { CompDocComponent } from './comp-doc/comp-doc.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompVerComponent,
+    CompDocComponent
   ],
   imports: [
     BrowserModule,

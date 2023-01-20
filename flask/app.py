@@ -20,10 +20,6 @@ def get_data2():
     rows = cursor.fetchall()
     return jsonify(rows)
 
-
-
-
-
 if __name__ == "__main__":
     
     app.run()
