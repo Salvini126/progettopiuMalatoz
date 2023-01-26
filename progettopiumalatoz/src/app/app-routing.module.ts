@@ -4,7 +4,7 @@ import { CompDocComponent } from './comp-doc/comp-doc.component';
 import { CompVerComponent } from './comp-ver/comp-ver.component';
 
 const routes: Routes = [
-  { path: 'verifiche', component: CompVerComponent}
+  { path: 'verifiche', component: CompVerComponent},
   { path: 'docenti', component: CompDocComponent},
 ];
 
