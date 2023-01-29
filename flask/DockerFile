@@ -1,0 +1,17 @@
+# Use Python image as base image
+FROM python:3.8
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the requirements.txt file
+COPY requirements.txt ./
+
+# Install the dependencies
+RUN pip install -r requirements.txt
+
+# Copy the remaining application files
+COPY . .
+
+# Set the default command to run when the container starts
+CMD [ "python", "app.py" ]

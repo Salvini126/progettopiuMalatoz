@@ -15,7 +15,7 @@ import { CompDocComponent } from './comp-doc/comp-doc.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

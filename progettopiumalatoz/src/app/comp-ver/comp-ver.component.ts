@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-comp-ver',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./comp-ver.component.css']
 })
 export class CompVerComponent {
-
+  query: string | undefined;
+  title = 'first-routed-app';
+  obsTrack: Observable<Object> | undefined;
+  results: any;
+  submit(query: HTMLInputElement): void {}
 }
+
