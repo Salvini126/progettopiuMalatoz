@@ -1,9 +1,9 @@
 export class Docenti {
     ID:number = 0;
-    nome:string = "";	
-    cognome	:string = "";
-    mail:string = "";	
-    pass:string = "";
+    Nome:string = "";	
+    Cognome	:string = "";
+    email:string = "";	
+    password:string = "";
 }
 
 export class Verifiche {
@@ -15,7 +15,7 @@ export class Verifiche {
     Tipo :string = "";
     Testo :string = "";
     GrigliaValutazione :string = "";
-    Difficoltà :string = "";
+    Difficolta :string = "";
     Tempo :number = 0;
     
 }

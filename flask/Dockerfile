@@ -8,6 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 #Copia tutta la cartella server
 COPY . .
+RUN 
 
 #Espone la porta 5000
 EXPOSE 5000

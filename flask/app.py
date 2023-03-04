@@ -1,25 +1,109 @@
-from flask import Flask
-from flask import jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash,  render_template, Response
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
+import re
+from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS
 import pymssql
+import pandas as pd
+from bson import json_util
+import json
+
+
+import psycopg2 
+import psycopg2.extras
 
 app = Flask(__name__)
 
-conn = pymssql.connect(server='213.140.22.237\SQLEXPRESS', user='salvini.matteo', password='xxx123##', database='salvini.matteo')
+app.secret_key = 'xyzsdfg'
+
+def connection():
+    conn = pymssql.connect(server='213.140.22.237\SQLEXPRESS', user='salvini.matteo', password='xxx123##', database='salvini.matteo')
+    return conn
+
+
+mysql = MySQL(app)
+CORS(app)
+
+
+@app.route('/')
+def index():
+    return ("je")
 
 @app.route('/Docenti')
 def get_data():
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Docente")
-    rows = cursor.fetchall()
-    return jsonify(rows)
+    conn = connection()
+    cur = conn.cursor(as_dict=True)
+    cur.execute("SELECT * FROM Docente")
+    list_users = cur.fetchall()
+    return jsonify(list_users)
+    resp = jsonify(list_users)
+    resp = json_util.dumps(list_users)
+    return Response(resp, mimetype='application/json')
 
 @app.route('/Verifiche')
 def get_data2():
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM VERIFICA")
-    rows = cursor.fetchall()
-    return jsonify(rows)
+    conn = connection()
+    cur = conn.cursor(as_dict=True)
+    cur.execute("SELECT * FROM VERIFICA")
+    list_users = cur.fetchall()
+    return jsonify(list_users)
+    resp = jsonify(list_users)
+    resp = json_util.dumps(list_users)
+    return Response(resp, mimetype='application/json')
 
-if __name__ == "__main__":
-    
-    app.run()
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.json['email']
+        password = request.json['password']
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM Docente WHERE email=%s AND password=%s', (email, password))
+        user = cursor.fetchone()
+        if user:
+            return jsonify({"message": "Logged in successfully", "email":email, "password":password}), 200
+        else:
+            return jsonify("Doesn't match"), 400
+
+    return jsonify({"message": "Error"}), 400
+
+
+@app.route('/logout')
+def logout():
+    if 'loggedin' in session:
+        session.pop('loggedin', None)
+        session.pop('Nome', None)
+        session.pop('email', None)
+        return jsonify({"message": "Logged out successfully"}), 200
+    else:
+        return jsonify({"message": "You are not logged in"}), 400
+        
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        Nome = request.json['Nome']
+        Cognome = request.json['Cognome']
+        email = request.json['email']
+        password = request.json['password']
+
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM Docente WHERE email=%s', (email))
+        account = cursor.fetchone()
+        if account:
+            return jsonify({"message": "Account already exists"}), 400
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            return jsonify({"message": "Invalid email address"}), 400
+        elif not Nome or not password or not email:
+            return jsonify({"message": "Please fill out the form"}), 400
+        else:
+            cursor.execute(
+                'INSERT INTO Docente (Nome, Cognome, email, password) VALUES (%s, %s, %s, %s)', (Nome,Cognome, email, password))
+            conn.commit()
+            return jsonify({"message": "You have successfully registered"}), 201
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)

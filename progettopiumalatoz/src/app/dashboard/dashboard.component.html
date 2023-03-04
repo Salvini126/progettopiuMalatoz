@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-sm">
+    <ul style="margin-left: 5px;">
+        <a (click)="logout()" style="cursor: pointer; right: 0;" class="btn-get-started scrollto"
+            routerLinkActive="active">Logout</a>
+    </ul>
+</nav>
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Istituto</td>
+                            <td>Materia</td>
+                            <td>Classe</td>
+                            <td>Titolo</td>
+                            <td>Tipo</td>
+                            <td>Testo</td>
+                            <td>GrigliaValutazione</td>
+                            <td>Difficoltà</td>
+                            <td>Tempo</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of data">
+                            <td>{{row.ID}}</td>
+                            <td>{{row.Istituto}}</td>
+                            <td>{{row.Materia}}</td>
+                            <td>{{row.Classe}}</td>
+                            <td>{{row.Titolo}}</td>
+                            <td>{{row.Tipo}}</td>
+                            <td>
+                                <a href="{{row.Testo}}" class="btn btn-warning btn-download btn-sm">&darr;</a>
+                            </td>
+                            <td>
+                                <a href="{{row.GrigliaValutazione}}" class="btn btn-warning btn-download btn-sm">&darr;</a>
+                            </td>
+                            <td>{{row.Difficolta}}</td>
+                            <td>{{row.Tempo}}</td>
+        
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
