@@ -1,5 +1,5 @@
 FROM nikolaik/python-nodejs
-#Definisce la working directory del container
+#/app è la cartella che conterrà tutti i file all'interno del container
 WORKDIR /app 
 RUN npm install -g nodemon
 #Copia requirements.txt e installa le dipendenze
